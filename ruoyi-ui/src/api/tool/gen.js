@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询生成表数据
 export function listTable(query) {
   return request({
-    url: '/tool/gen/list',
+    url: '/tool/gen/pageList',
     method: 'get',
     params: query
   })
@@ -11,7 +11,7 @@ export function listTable(query) {
 // 查询db数据库列表
 export function listDbTable(query) {
   return request({
-    url: '/tool/gen/db/list',
+    url: '/tool/gen/db/pageList',
     method: 'get',
     params: query
   })

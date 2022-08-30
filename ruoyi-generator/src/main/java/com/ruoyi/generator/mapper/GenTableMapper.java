@@ -1,6 +1,8 @@
 package com.ruoyi.generator.mapper;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.generator.domain.GenTable;
 
 /**
@@ -8,8 +10,7 @@ import com.ruoyi.generator.domain.GenTable;
  * 
  * @author ruoyi
  */
-public interface GenTableMapper
-{
+public interface GenTableMapper extends BaseMapper<GenTable> {
     /**
      * 查询业务列表
      * 
@@ -17,6 +18,8 @@ public interface GenTableMapper
      * @return 业务集合
      */
     public List<GenTable> selectGenTableList(GenTable genTable);
+
+    int countDbTableList(GenTable genTable);
 
     /**
      * 查询据库列表

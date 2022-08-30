@@ -34,8 +34,8 @@
       <pagination
         v-show="total>0"
         :total="total"
-        :page.sync="queryParams.pageNum"
-        :limit.sync="queryParams.pageSize"
+        :page.sync="queryParams.current"
+        :limit.sync="queryParams.size"
         @pagination="getList"
       />
     </el-row>
@@ -61,8 +61,8 @@ export default {
       dbTableList: [],
       // 查询参数
       queryParams: {
-        pageNum: 1,
-        pageSize: 10,
+        current: 1,
+        size: 10,
         tableName: undefined,
         tableComment: undefined
       }
@@ -85,14 +85,14 @@ export default {
     getList() {
       listDbTable(this.queryParams).then(res => {
         if (res.code === 200) {
-          this.dbTableList = res.rows;
-          this.total = res.total;
+          this.dbTableList = res.data.records;
+          this.total = res.data.total;
         }
       });
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
+      this.queryParams.current = 1;
       this.getList();
     },
     /** 重置按钮操作 */

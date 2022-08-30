@@ -8,7 +8,14 @@ export function listConfig(query) {
     params: query
   })
 }
-
+// 查询参数列表
+export function pageList(query) {
+  return request({
+    url: '/system/config/pageList',
+    method: 'get',
+    params: query
+  })
+}
 // 查询参数详细
 export function getConfig(configId) {
   return request({

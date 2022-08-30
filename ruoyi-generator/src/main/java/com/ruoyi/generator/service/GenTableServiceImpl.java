@@ -11,6 +11,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.velocity.Template;
@@ -43,7 +46,7 @@ import com.ruoyi.generator.util.VelocityUtils;
  * @author ruoyi
  */
 @Service
-public class GenTableServiceImpl implements IGenTableService
+public class GenTableServiceImpl extends ServiceImpl<GenTableMapper,GenTable> implements IGenTableService
 {
     private static final Logger log = LoggerFactory.getLogger(GenTableServiceImpl.class);
 
@@ -81,14 +84,24 @@ public class GenTableServiceImpl implements IGenTableService
 
     /**
      * 查询据库列表
-     * 
+     *
      * @param genTable 业务信息
+     * @param page
      * @return 数据库表集合
      */
     @Override
-    public List<GenTable> selectDbTableList(GenTable genTable)
-    {
+    public List<GenTable> selectDbTableList(GenTable genTable, Page page) {
+        long current =page.getCurrent();
+        long size = page.getSize();
+        long start =  size * (current==1?0:current-1);
+        genTable.setStart(start);
+        genTable.setEnd(size);
         return genTableMapper.selectDbTableList(genTable);
+    }
+
+    @Override
+    public int countDbTableList(GenTable genTable) {
+        return genTableMapper.countDbTableList(genTable);
     }
 
     /**

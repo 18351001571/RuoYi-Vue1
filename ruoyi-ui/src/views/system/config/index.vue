@@ -181,7 +181,7 @@
 </template>
 
 <script>
-import { listConfig, getConfig, delConfig, addConfig, updateConfig, refreshCache } from "@/api/system/config";
+import {listConfig, getConfig, delConfig, addConfig, updateConfig, refreshCache, pageList} from "@/api/system/config";
 
 export default {
   name: "Config",
@@ -239,7 +239,7 @@ export default {
     /** 查询参数列表 */
     getList() {
       this.loading = true;
-      listConfig(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+      pageList(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
           this.configList = response.data.records;
           this.total = response.data.total;
           this.loading = false;

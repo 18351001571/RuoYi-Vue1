@@ -8,7 +8,14 @@ export function list${BusinessName}(query) {
     params: query
   })
 }
-
+// 查询${functionName}分页列表
+export function list${BusinessName}(query) {
+  return request({
+    url: '/${moduleName}/${businessName}/pageList',
+    method: 'get',
+    params: query
+  })
+}
 // 查询${functionName}详细
 export function get${BusinessName}(${pkColumn.javaField}) {
   return request({
