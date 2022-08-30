@@ -1,6 +1,9 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoyi.common.core.domain.entity.SysUser;
 
 /**
@@ -8,7 +11,7 @@ import com.ruoyi.common.core.domain.entity.SysUser;
  * 
  * @author ruoyi
  */
-public interface ISysUserService
+public interface ISysUserService extends IService<SysUser>
 {
     /**
      * 根据条件分页查询用户列表
@@ -20,19 +23,21 @@ public interface ISysUserService
 
     /**
      * 根据条件分页查询已分配用户角色列表
-     * 
+     *
+     * @param page
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectAllocatedList(SysUser user);
+    public List<SysUser> selectAllocatedList(Page page, SysUser user);
 
     /**
      * 根据条件分页查询未分配用户角色列表
-     * 
+     *
+     * @param page
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectUnallocatedList(SysUser user);
+    public List<SysUser> selectUnallocatedList(Page page, SysUser user);
 
     /**
      * 通过用户名查询用户
@@ -203,4 +208,8 @@ public interface ISysUserService
      * @return 结果
      */
     public String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operName);
+
+    int countAllocatedList(SysUser user);
+
+    int countUnallocatedList(SysUser user);
 }

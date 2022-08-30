@@ -121,8 +121,8 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      :page.sync="queryParams.current"
+      :limit.sync="queryParams.size"
       @pagination="getList"
     />
   </div>
@@ -158,8 +158,8 @@ export default {
       defaultSort: {prop: 'loginTime', order: 'descending'},
       // 查询参数
       queryParams: {
-        pageNum: 1,
-        pageSize: 10,
+        current: 1,
+        size: 10,
         ipaddr: undefined,
         userName: undefined,
         status: undefined
@@ -174,15 +174,15 @@ export default {
     getList() {
       this.loading = true;
       list(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-          this.list = response.rows;
-          this.total = response.total;
+        this.list = response.data.records;
+        this.total = response.data.total;
           this.loading = false;
         }
       );
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
+      this.queryParams.current = 1;
       this.getList();
     },
     /** 重置按钮操作 */

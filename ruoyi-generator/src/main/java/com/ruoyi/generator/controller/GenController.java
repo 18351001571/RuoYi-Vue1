@@ -69,10 +69,11 @@ public class GenController extends BaseController {
     @PreAuthorize("@ss.hasPermi('tool:gen:list')")
     @GetMapping("/db/pageList")
     public AjaxResult dataList(Page page, GenTable genTable) {
-        if (genTableService.countDbTableList(genTable)>0){
+        int count = genTableService.countDbTableList(genTable);
+        if (count >0){
             List<GenTable> genTables = genTableService.selectDbTableList(genTable, page);
             page.setRecords(genTables);
-            page.setTotal(genTableService.countDbTableList(genTable));
+            page.setTotal(count);
         }
         return AjaxResult.success(page);
     }

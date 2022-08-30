@@ -17,10 +17,10 @@
     </el-form>
 
     <h4 class="form-header h4">角色信息</h4>
-    <el-table v-loading="loading" :row-key="getRowKey" @row-click="clickRow" ref="table" @selection-change="handleSelectionChange" :data="roles.slice((pageNum-1)*pageSize,pageNum*pageSize)">
+    <el-table v-loading="loading" :row-key="getRowKey" @row-click="clickRow" ref="table" @selection-change="handleSelectionChange" :data="roles.slice((current-1)*size,current*size)">
       <el-table-column label="序号" type="index" align="center">
         <template slot-scope="scope">
-          <span>{{(pageNum - 1) * pageSize + scope.$index + 1}}</span>
+          <span>{{(current - 1) * size + scope.$index + 1}}</span>
         </template>
       </el-table-column>
       <el-table-column type="selection" :reserve-selection="true" width="55"></el-table-column>
@@ -33,8 +33,8 @@
         </template>
       </el-table-column>
     </el-table>
-    
-    <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize" />
+
+    <pagination v-show="total>0" :total="total" :page.sync="current" :limit.sync="size" />
 
     <el-form label-width="100px">
       <el-form-item style="text-align: center;margin-left:-120px;margin-top:30px;">
@@ -56,8 +56,8 @@ export default {
       loading: true,
       // 分页信息
       total: 0,
-      pageNum: 1,
-      pageSize: 10,
+      current: 1,
+      size: 10,
       // 选中角色编号
       roleIds:[],
       // 角色信息

@@ -29,27 +29,27 @@ public class BaseEntity implements Serializable {
     /**
      * 创建者
      */
-    @TableField(value = "create_by")
+    @TableField(value = "create_by", fill = FieldFill.INSERT)
     private String createBy;
 
     /**
      * 创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @TableField(fill = FieldFill.INSERT)
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Date createTime;
 
     /**
      * 更新者
      */
-    @TableField(value = "update_by")
+    @TableField(value = "update_by", fill = FieldFill.UPDATE)
     private String updateBy;
 
     /**
      * 更新时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @TableField(fill = FieldFill.UPDATE)
+    @TableField(value = "update_time", fill = FieldFill.UPDATE)
     private Date updateTime;
 
     /**
@@ -59,10 +59,16 @@ public class BaseEntity implements Serializable {
     private String remark;
 
     /**
+     * 是否删除，1是，0否
+     */
+    @TableField(exist = false)
+    private Integer isDelete;
+    /**
      * 请求参数
      */
     @TableField(exist = false)
     private Map<String, Object> params;
+
 
     public Map<String, Object> getParams() {
         if (params == null) {

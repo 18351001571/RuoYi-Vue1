@@ -28,11 +28,11 @@ import java.util.List;
 
 /**
  * ${functionName}Controller
- * 
+ *
  * @author ${author}
  * @date ${datetime}
  */
-@Api(value = "${businessName}", tags = "${businessName}")
+@Api(value = "${functionName}", tags = "${functionName}")
 @RestController
 @RequestMapping("/${moduleName}/${businessName}")
 public class ${ClassName}Controller extends BaseController
@@ -69,7 +69,7 @@ public class ${ClassName}Controller extends BaseController
     @Log(title = "${functionName}", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, ${ClassName} ${className}) {
-        List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
+        List<${ClassName}> list = ${className}Service.list(new QueryWrapper<>(${className}));
         ExcelUtil<${ClassName}> util = new ExcelUtil<${ClassName}>(${ClassName}.class);
         util.exportExcel(response, list, "${functionName}数据");
     }
@@ -81,7 +81,7 @@ public class ${ClassName}Controller extends BaseController
     @PreAuthorize("@ss.hasPermi('${permissionPrefix}:query')")
     @GetMapping(value = "/{${pkColumn.javaField}}")
     public AjaxResult getInfo(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField}) {
-        return AjaxResult.success(${className}Service.select${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaField}));
+        return AjaxResult.success(${className}Service.getById(${pkColumn.javaField}));
     }
 
     /**
@@ -92,7 +92,7 @@ public class ${ClassName}Controller extends BaseController
     @Log(title = "${functionName}", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody ${ClassName} ${className}) {
-        return toAjax(${className}Service.insert${ClassName}(${className}));
+        return toAjax(${className}Service.save(${className}));
     }
 
     /**
@@ -103,7 +103,7 @@ public class ${ClassName}Controller extends BaseController
     @Log(title = "${functionName}", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody ${ClassName} ${className}) {
-        return toAjax(${className}Service.update${ClassName}(${className}));
+        return toAjax(${className}Service.updateById(${className}));
     }
 
     /**
@@ -113,7 +113,7 @@ public class ${ClassName}Controller extends BaseController
     @PreAuthorize("@ss.hasPermi('${permissionPrefix}:remove')")
     @Log(title = "${functionName}", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{${pkColumn.javaField}s}")
-    public AjaxResult remove(@PathVariable ${pkColumn.javaType}[] ${pkColumn.javaField}s) {
-        return toAjax(${className}Service.delete${ClassName}By${pkColumn.capJavaField}s(${pkColumn.javaField}s));
+    public AjaxResult remove(@PathVariable List<Long> ${pkColumn.javaField}s) {
+        return toAjax(${className}Service.removeBatchByIds(${pkColumn.javaField}s));
     }
 }

@@ -3,6 +3,9 @@ package com.ruoyi.web.controller.system;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -40,14 +43,11 @@ public class SysDictDataController extends BaseController
     @Autowired
     private ISysDictTypeService dictTypeService;
 
-//    @PreAuthorize("@ss.hasPermi('system:dict:list')")
-//    @GetMapping("/list")
-//    public TableDataInfo list(SysDictData dictData)
-//    {
-//        startPage();
-//        List<SysDictData> list = dictDataService.selectDictDataList(dictData);
-//        return getDataTable(list);
-//    }
+    @PreAuthorize("@ss.hasPermi('system:dict:list')")
+    @GetMapping("/list")
+    public AjaxResult list(Page page, SysDictData dictData) {
+        return AjaxResult.success(dictDataService.page(page,new QueryWrapper<>(dictData)));
+    }
 
     @Log(title = "字典数据", businessType = BusinessType.EXPORT)
     @PreAuthorize("@ss.hasPermi('system:dict:export')")

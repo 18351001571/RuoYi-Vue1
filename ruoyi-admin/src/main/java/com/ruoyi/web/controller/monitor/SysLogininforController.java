@@ -2,6 +2,9 @@ package com.ruoyi.web.controller.monitor;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,14 +38,11 @@ public class SysLogininforController extends BaseController
     @Autowired
     private SysPasswordService passwordService;
 
-//    @PreAuthorize("@ss.hasPermi('monitor:logininfor:list')")
-//    @GetMapping("/list")
-//    public TableDataInfo list(SysLogininfor logininfor)
-//    {
-//        startPage();
-//        List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
-//        return getDataTable(list);
-//    }
+    @PreAuthorize("@ss.hasPermi('monitor:logininfor:list')")
+    @GetMapping("/list")
+    public AjaxResult list(Page page, SysLogininfor logininfor) {
+        return AjaxResult.success(logininforService.page(page,new QueryWrapper<>(logininfor)));
+    }
 
     @Log(title = "登录日志", businessType = BusinessType.EXPORT)
     @PreAuthorize("@ss.hasPermi('monitor:logininfor:export')")

@@ -117,8 +117,8 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      :page.sync="queryParams.current"
+      :limit.sync="queryParams.size"
       @pagination="getList"
     />
 
@@ -197,8 +197,8 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
-        pageNum: 1,
-        pageSize: 10,
+        current: 1,
+        size: 10,
         noticeTitle: undefined,
         createBy: undefined,
         status: undefined
@@ -224,8 +224,8 @@ export default {
     getList() {
       this.loading = true;
       listNotice(this.queryParams).then(response => {
-        this.noticeList = response.rows;
-        this.total = response.total;
+        this.noticeList = response.data.records;
+        this.total = response.data.total;
         this.loading = false;
       });
     },
@@ -247,7 +247,7 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
+      this.queryParams.current = 1;
       this.getList();
     },
     /** 重置按钮操作 */
